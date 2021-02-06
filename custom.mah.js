@@ -20,6 +20,12 @@ marker_shades = {
     "BUFR": base1.abs("#330066 ", maxHrs),
     "netCDF": base2.abs("#00ff33 ", maxHrs)
 }
+marker_chroma = {
+    "BUFR": chroma.scale(['yellow', '008ae5']),
+    "netCDF": chroma.scale(['yellow', 'red', 'black'])
+}
+
+
 path_colors = {
     "simulated": {
         color: 'DarkOrange'
@@ -122,7 +128,8 @@ function beforeMapLoads(){
 	            age_index = Math.max(age_index, 0);
 	            var rounded_age = Math.round(age_hrs * 10) / 10;
 
-	            geojsonMarkerOptions.fillColor = marker_shades[primary.source].get(age_index).getHex();
+	            // geojsonMarkerOptions.fillColor = marker_shades[primary.source].get(age_index).getHex();
+				geojsonMarkerOptions.fillColor = marker_chroma[primary.source](age_index/maxHrs);
 
 	            var marker = L.circleMarker(latlng, geojsonMarkerOptions);
 	            marker.ascents = a;
