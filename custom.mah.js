@@ -1,6 +1,3 @@
-// Enter your custom JavaScript code here
-
-
 var datapath = 'https://radiosonde.mah.priv.at/data-dev/';
 var summary = datapath + 'summary.geojson';
 
@@ -12,19 +9,14 @@ var geojsonMarkerOptions = {
     fillOpacity: 0.8
 };
 
-// darkest blue = most recent
-var base1 = new KolorWheel("#eeffff ");
-var base2 = new KolorWheel("#eeffff ");
-var maxHrs = 24;
-marker_shades = {
-    "BUFR": base1.abs("#330066 ", maxHrs),
-    "netCDF": base2.abs("#00ff33 ", maxHrs)
-}
-marker_chroma = {
+let maxHrs = 72;
+let marker_chroma = {
     "BUFR": chroma.scale(['yellow', '008ae5']),
     "netCDF": chroma.scale(['yellow', 'red', 'black'])
-}
 
+	// "BUFR": chroma.scale(['DarkSlateBlue', 'Cyan']),
+    // "netCDF": chroma.scale(['DarkGreen', 'GreenYellow'])
+};
 
 path_colors = {
     "simulated": {
@@ -36,11 +28,9 @@ path_colors = {
 }
 
 function drawpath(geojson, l) {
-    // record for later, and maybe a skewt on click
-    //l.sourceTarget.feature.properties.ascents[0].data = geojson;
     var path_source = geojson.properties.path_source;
-
     var lineCoordinate = [];
+
     for (var i in geojson.features) {
         var pointJson = geojson.features[i];
         var coord = pointJson.geometry.coordinates;
@@ -65,9 +55,10 @@ function mouseover(l) {
                     };
                 }(l))
             );
-        } else {
-            // console.log("data for ",i,"already loaded:", a.data);
         }
+		// else {
+        //  	console.log("data for ",i,"already loaded:", a.data);
+        // }
     }
 }
 
@@ -82,8 +73,6 @@ function findBUFR(value, index, array) {
 function findnetCDF(value, index, array) {
     return (value.source === "netCDF");
 }
-
-
 
 function beforeMapLoads(){
 	console.log("Before map loads function");
