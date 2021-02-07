@@ -38,10 +38,71 @@ function drawpath(geojson) {
     }
     L.polyline(lineCoordinate, path_colors[path_source]).addTo(bootleaf.map);
 }
+// single = [{
+//     "press": 1000.0,
+//     "hght": 130.0,
+//     "temp": 18.5,
+//     "dwpt": 8.8,
+//     "wdir": 252.0,
+//     "wspd": 1.5433333333200001
+// }, {
+//
+// "time": 1612740739.6,
+// "gpheight": 112,
+// "temp": 280.35,
+// "dewpoint": 277.15,
+// "pressure": 1000,
+// "wind_u": 10.72,
+// "wind_v": 9
+// {press: 99990, hght: 40, temp: 276.55, dwpt: 272.56, wdir: 45, …}
+
+
+function uv2speed(u,v) {
+    return Math.sqrt( u * u + v * v);
+}
+function uv2dir(u,v) {
+    return (180/Math.PI)* Math.atan2(-u, -v);
+}
+
+let zeroK = 273.15;
+function plotSkewT(geojson) {
+    var data  = [];
+
+    for (var i in geojson.features) {
+        var p = geojson.features[i].properties;
+        var press = p['pressure'];
+        if (press > 10000) { // must be from BUFR
+            press = press/100.0;
+        }
+        if (!p.wind_u || !p.wind_u)
+            continue;
+        data.push({
+            "press": press,
+            "hght": p['gpheight'],
+            "temp": p['temp'] - zeroK,
+            "dwpt": p['dewpoint'] - zeroK,
+            "wdir": uv2dir(p['wind_u'],p['wind_v']),
+            "wspd": uv2speed(p['wind_u'],p['wind_v'])
+        });
+    }
+    skewt.plot(data);
+    $("#sidebar").show("slow");
+    //
+    // try {
+    //     skewt.plot(single);
+    //     $("#sidebar").show("slow");
+    //     $.growl.notice({
+    //         title: l.target.feature.properties.name,
+    //         message: "plot complete"
+    //     });
+    // }
+    // catch (err) {
+    //     console.log(err);
+    //     alert(err);
+    // }
+}
 
 function loadAscent(l, p, index, completion) {
-    // var p = datapath + a.path;
-    // l.index = i;
     $.getJSON(p,
         (function(site) {
             return function(geojson) {
@@ -66,14 +127,6 @@ function mouseover(l) {
             var p = datapath + a.path;
             l.index = i;
             loadAscent(l, p, i, drawpath);
-            // $.getJSON(p,
-            //     (function(site) {
-            //         return function(geojson) {
-            //             site.target.feature.properties.ascents[site.index].data = geojson;
-            //             drawpath(geojson);
-            //         };
-            //     }(l))
-            // );
         }
         else {
             console.log("data for ", i, "already loaded:", a.data);
@@ -91,19 +144,10 @@ function clicked(l) {
     if (!latest.hasOwnProperty('data')) {
         console.log("data for ", latest, "not yet loaded");
 
+    } else {
+        plotSkewT(latest.data);
     }
-    try {
-        skewt.plot(single);
-        $("#sidebar").show("slow");
-        $.growl.notice({
-            title: l.target.feature.properties.name,
-            message: "plot complete"
-        });
-    }
-    catch (err) {
-        console.log(err);
-        alert(err);
-    }
+
 }
 
 function findBUFR(value, index, array) {
