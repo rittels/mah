@@ -61,19 +61,17 @@ function round3(value) {
 let zeroK = 273.15;
 function plotSkewT(geojson) {
     var data  = [];
+    var pscale = 1.;
+    if  (geojson.properties.source == 'BUFR')
+        pscale = 0.01;
 
     for (var i in geojson.features) {
         var p = geojson.features[i].properties;
         var press = p['pressure'];
-        if (press > 10000) { // must be from BUFR
-            press = press/100.0;
-        }
-        if (press < 100)
-            continue;
         if (!p.wind_u || !p.wind_u)
             continue;
         data.push({
-            "press": round3(press),
+            "press": round3(press * pscale),
             "hght": round3(p['gpheight']),
             "temp": round3(p['temp'] - zeroK),
             "dwpt": round3(p['dewpoint'] - zeroK),
