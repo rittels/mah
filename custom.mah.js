@@ -38,6 +38,21 @@ function drawpath(geojson, l) {
     }
     L.polyline(lineCoordinate, path_colors[path_source]).addTo(bootleaf.map);
 }
+
+// function loadAscent(l, url, index, completion) {
+//     if (!a.hasOwnProperty('data')) {
+//         var p = datapath + a.path;
+//         l.index = i;
+//         $.getJSON(p,
+//             (function(site) {
+//                 return function(geojson) {
+//                     site.target.feature.properties.ascents[site.index].data = geojson;
+//                     drawpath(geojson, site);
+//                 };
+//             }(l))
+//         );
+// }
+
 let drawAscents = 1;
 
 function mouseover(l) {
@@ -72,6 +87,11 @@ function clicked(l) {
 
     $('#sidebarTitle').html(l.target.feature.properties.name);
 
+    var latest = l.target.feature.properties.ascents[0];
+    if (!latest.hasOwnProperty('data')) {
+        console.log("data for ",latest,"not yet loaded");
+
+    }
     try {
         skewt.plot(single);
         $("#sidebar").show("slow");
