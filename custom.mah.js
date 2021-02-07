@@ -39,19 +39,17 @@ function drawpath(geojson) {
     L.polyline(lineCoordinate, path_colors[path_source]).addTo(bootleaf.map);
 }
 
-function loadAscent(l, url, index, completion) {
-    if (!a.hasOwnProperty('data')) {
-        var p = datapath + a.path;
-        l.index = i;
-        $.getJSON(p,
-            (function(site) {
-                return function(geojson) {
-                    site.target.feature.properties.ascents[site.index].data = geojson;
-                    completion(geojson);
-                };
-            }(l))
-        );
-    }
+function loadAscent(l, p, index, completion) {
+    // var p = datapath + a.path;
+    // l.index = i;
+    $.getJSON(p,
+        (function(site) {
+            return function(geojson) {
+                site.target.feature.properties.ascents[site.index].data = geojson;
+                completion(geojson);
+            };
+        }(l))
+    );
 }
 
 let drawAscents = 1;
@@ -67,17 +65,18 @@ function mouseover(l) {
         if (!a.hasOwnProperty('data')) {
             var p = datapath + a.path;
             l.index = i;
-            $.getJSON(p,
-                (function(site) {
-                    return function(geojson) {
-                        site.target.feature.properties.ascents[site.index].data = geojson;
-                        drawpath(geojson);
-                    };
-                }(l))
-            );
+            loadAscent(l, p, i, drawpath);
+            // $.getJSON(p,
+            //     (function(site) {
+            //         return function(geojson) {
+            //             site.target.feature.properties.ascents[site.index].data = geojson;
+            //             drawpath(geojson);
+            //         };
+            //     }(l))
+            // );
         }
         else {
-         	console.log("data for ",i,"already loaded:", a.data);
+            console.log("data for ", i, "already loaded:", a.data);
         }
     }
 }
@@ -90,14 +89,14 @@ function clicked(l) {
 
     var latest = l.target.feature.properties.ascents[0];
     if (!latest.hasOwnProperty('data')) {
-        console.log("data for ",latest,"not yet loaded");
+        console.log("data for ", latest, "not yet loaded");
 
     }
     try {
         skewt.plot(single);
         $("#sidebar").show("slow");
         $.growl.notice({
-			title: l.target.feature.properties.name,
+            title: l.target.feature.properties.name,
             message: "plot complete"
         });
     }
