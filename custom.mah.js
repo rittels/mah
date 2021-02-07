@@ -42,8 +42,13 @@ function drawpath(geojson) {
 function uv2speed(u,v) {
     return Math.sqrt( u * u + v * v);
 }
+
+function deg(x) {
+    return (180/Math.PI)*x
+}
+
 function uv2dir(u,v) {
-    return (180/Math.PI)* Math.atan2(-u, -v);
+    return  deg(Math.PI/2 - Math.atan2(-v, -u)) % 360;
 }
 
 function round3(value) {
@@ -60,6 +65,8 @@ function plotSkewT(geojson) {
         if (press > 10000) { // must be from BUFR
             press = press/100.0;
         }
+        if (press < 100)
+            continue;
         if (!p.wind_u || !p.wind_u)
             continue;
         data.push({
