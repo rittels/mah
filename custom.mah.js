@@ -48,7 +48,10 @@ function deg(x) {
 }
 
 function uv2dir(u,v) {
-    return  deg(Math.PI/2 - Math.atan2(-v, -u)) % 360;
+    var d = deg(Math.PI/2 - Math.atan2(-v, -u));
+    while (d < 0)
+        d = (d + 360) % 360;
+    return d;
 }
 
 function round3(value) {
