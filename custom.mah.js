@@ -38,30 +38,16 @@ function drawpath(geojson) {
     }
     L.polyline(lineCoordinate, path_colors[path_source]).addTo(bootleaf.map);
 }
-// single = [{
-//     "press": 1000.0,
-//     "hght": 130.0,
-//     "temp": 18.5,
-//     "dwpt": 8.8,
-//     "wdir": 252.0,
-//     "wspd": 1.5433333333200001
-// }, {
-//
-// "time": 1612740739.6,
-// "gpheight": 112,
-// "temp": 280.35,
-// "dewpoint": 277.15,
-// "pressure": 1000,
-// "wind_u": 10.72,
-// "wind_v": 9
-// {press: 99990, hght: 40, temp: 276.55, dwpt: 272.56, wdir: 45, …}
-
 
 function uv2speed(u,v) {
     return Math.sqrt( u * u + v * v);
 }
 function uv2dir(u,v) {
     return (180/Math.PI)* Math.atan2(-u, -v);
+}
+
+function round3(value) {
+    return Math.round(value * 1000) / 1000
 }
 
 let zeroK = 273.15;
@@ -77,29 +63,16 @@ function plotSkewT(geojson) {
         if (!p.wind_u || !p.wind_u)
             continue;
         data.push({
-            "press": press,
-            "hght": p['gpheight'],
-            "temp": p['temp'] - zeroK,
-            "dwpt": p['dewpoint'] - zeroK,
-            "wdir": uv2dir(p['wind_u'],p['wind_v']),
-            "wspd": uv2speed(p['wind_u'],p['wind_v'])
+            "press": round3(press),
+            "hght": round3(p['gpheight']),
+            "temp": round3(p['temp'] - zeroK),
+            "dwpt": round3(p['dewpoint'] - zeroK),
+            "wdir": round3(uv2dir(p['wind_u'],p['wind_v'])),
+            "wspd": round3(uv2speed(p['wind_u'],p['wind_v']))
         });
     }
     skewt.plot(data);
     $("#sidebar").show("slow");
-    //
-    // try {
-    //     skewt.plot(single);
-    //     $("#sidebar").show("slow");
-    //     $.growl.notice({
-    //         title: l.target.feature.properties.name,
-    //         message: "plot complete"
-    //     });
-    // }
-    // catch (err) {
-    //     console.log(err);
-    //     alert(err);
-    // }
 }
 
 function loadAscent(l, p, index, completion) {
@@ -227,188 +200,3 @@ function afterMapLoads() {
 
     console.log("After map loads function");
 }
-
-
-let single = [{
-    "press": 1000.0,
-    "hght": 130.0,
-    "temp": 18.5,
-    "dwpt": 8.8,
-    "wdir": 252.0,
-    "wspd": 1.5433333333200001
-}, {
-    "press": 975.0,
-    "hght": 346.0,
-    "temp": 16.3,
-    "dwpt": 8.2,
-    "wdir": 254.0,
-    "wspd": 0.51444444444
-}, {
-    "press": 950.0,
-    "hght": 567.0,
-    "temp": 14.5,
-    "dwpt": 7.6,
-    "wdir": 110.0,
-    "wspd": 0.51444444444
-}, {
-    "press": 925.0,
-    "hght": 791.0,
-    "temp": 12.6,
-    "dwpt": 6.8,
-    "wdir": 108.0,
-    "wspd": 1.02888888888
-}, {
-    "press": 900.0,
-    "hght": 1020.0,
-    "temp": 10.7,
-    "dwpt": 5.8,
-    "wdir": 118.0,
-    "wspd": 1.5433333333200001
-}, {
-    "press": 850.0,
-    "hght": 1494.0,
-    "temp": 7.5,
-    "dwpt": 2.8,
-    "wdir": 155.0,
-    "wspd": 2.05777777776
-}, {
-    "press": 800.0,
-    "hght": 1991.0,
-    "temp": 4.1,
-    "dwpt": -0.6,
-    "wdir": 183.0,
-    "wspd": 2.05777777776
-}, {
-    "press": 750.0,
-    "hght": 2513.0,
-    "temp": 0.6,
-    "dwpt": -4.5,
-    "wdir": 194.0,
-    "wspd": 1.5433333333200001
-}, {
-    "press": 700.0,
-    "hght": 3063.0,
-    "temp": -2.3,
-    "dwpt": -12.0,
-    "wdir": 187.0,
-    "wspd": 1.02888888888
-}, {
-    "press": 650.0,
-    "hght": 3649.0,
-    "temp": -4.9,
-    "dwpt": -20.5,
-    "wdir": 223.0,
-    "wspd": 1.5433333333200001
-}, {
-    "press": 600.0,
-    "hght": 4273.0,
-    "temp": -8.4,
-    "dwpt": -28.9,
-    "wdir": 242.0,
-    "wspd": 3.0866666666400002
-}, {
-    "press": 550.0,
-    "hght": 4942.0,
-    "temp": -13.5,
-    "dwpt": -26.0,
-    "wdir": 245.0,
-    "wspd": 3.6011111110800003
-}, {
-    "press": 500.0,
-    "hght": 5659.0,
-    "temp": -18.6,
-    "dwpt": -18.6,
-    "wdir": 236.0,
-    "wspd": 9.2599999999200016
-}, {
-    "press": 450.0,
-    "hght": 6440.0,
-    "temp": -22.1,
-    "dwpt": -22.1,
-    "wdir": 246.0,
-    "wspd": 18.0055555554
-}, {
-    "press": 400.0,
-    "hght": 7296.0,
-    "temp": -28.1,
-    "dwpt": -28.1,
-    "wdir": 240.0,
-    "wspd": 24.178888888680003
-}, {
-    "press": 350.0,
-    "hght": 8239.0,
-    "temp": -35.5,
-    "dwpt": -36.6,
-    "wdir": 239.0,
-    "wspd": 26.23666666644
-}, {
-    "press": 300.0,
-    "hght": 9293.0,
-    "temp": -44.0,
-    "dwpt": -44.8,
-    "wdir": 239.0,
-    "wspd": 29.837777777520003
-}, {
-    "press": 250.0,
-    "hght": 10491.0,
-    "temp": -53.1,
-    "dwpt": -54.8,
-    "wdir": 237.0,
-    "wspd": 33.438888888600005
-}, {
-    "press": 200.0,
-    "hght": 11904.0,
-    "temp": -59.3,
-    "dwpt": -65.6,
-    "wdir": 240.0,
-    "wspd": 31.89555555528
-}, {
-    "press": 150.0,
-    "hght": 13706.0,
-    "temp": -58.6,
-    "dwpt": -75.8,
-    "wdir": 250.0,
-    "wspd": 24.178888888680003
-}, {
-    "press": 100.0,
-    "hght": 16245.0,
-    "temp": -59.5,
-    "dwpt": -82.5,
-    "wdir": 260.0,
-    "wspd": 18.519999999840003
-}, {
-    "press": 70.0,
-    "hght": 18476.0,
-    "temp": -58.8,
-    "dwpt": -83.1,
-    "wdir": 256.0,
-    "wspd": 11.83222222212
-}, {
-    "press": 50.0,
-    "hght": 20595.0,
-    "temp": -57.3,
-    "dwpt": -83.7,
-    "wdir": 259.0,
-    "wspd": 8.23111111104
-}, {
-    "press": 30.0,
-    "hght": 23845.0,
-    "temp": -53.9,
-    "dwpt": -85.4,
-    "wdir": 173.0,
-    "wspd": 2.5722222222
-}, {
-    "press": 20.0,
-    "hght": 26472.0,
-    "temp": -49.8,
-    "dwpt": -86.3,
-    "wdir": 214.0,
-    "wspd": 3.6011111110800003
-}, {
-    "press": 10.0,
-    "hght": 31073.0,
-    "temp": -42.5,
-    "dwpt": -88.8,
-    "wdir": 267.0,
-    "wspd": 4.11555555552
-}];
