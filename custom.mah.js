@@ -1,3 +1,5 @@
+import SkewT from './mah/skewt.js';
+
 var datapath = 'https://radiosonde.mah.priv.at/data-dev/';
 var summary = datapath + 'summary.geojson';
 
@@ -18,7 +20,7 @@ let marker_chroma = {
     // "netCDF": chroma.scale(['DarkGreen', 'GreenYellow'])
 };
 
-path_colors = {
+var path_colors = {
     "simulated": {
         color: 'DarkOrange'
     },
@@ -94,7 +96,7 @@ function findnetCDF(value, index, array) {
     return (value.source === "netCDF");
 }
 
-function beforeMapLoads() {
+window.beforeMapLoads = function() {
     console.log("Before map loads function");
     // Continue to load the map
     loadMap();
@@ -118,6 +120,7 @@ function beforeMapLoads() {
                 if (!newest_bufr && !newest_netcdf)
                     return;
 
+                var a;    
                 if (newest_bufr && newest_netcdf &&
                     (newest_bufr.syn_timestamp) ==
                     (newest_netcdf.syn_timestamp)) {
@@ -158,7 +161,7 @@ function beforeMapLoads() {
 }
 
 
-function afterMapLoads() {
+window.afterMapLoads = function() {
     // This function is run after the map has loaded. It gives access to bootleaf.map, bootleaf.TOCcontrol, etc
 
     console.log("After map loads function");
