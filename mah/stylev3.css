@@ -1,0 +1,52 @@
+/* .flex-container {
+    display: flex;
+}
+
+.flex-child {
+    flex: 1;
+    border: 2px solid black;
+}
+
+.flex-child:first-child {
+    margin-right: 20px;
+    width: 80%;
+}
+.flex-child:second-child {
+    margin-right: 20px;
+}
+
+ */
+
+body {
+  margin: 0;
+}
+/* html, body, */
+
+#map {
+  height: 60%;
+
+}
+
+/* https://gis.stackexchange.com/questions/212820/overriding-leaflet-tooltip-style */
+
+.BUFRCSSClass {
+  background: PaleTurquoise;
+  border: 2px solid blue
+}
+.leaflet-tooltip-left.BUFRCSSClass::before {
+  border-left-color: blue;
+}
+.leaflet-tooltip-right.BUFRCSSClass::before {
+  border-right-color: blue;
+}
+
+.netCDFCSSClass {
+  background: PaleGreen;
+  border: 2px solid green
+}
+.leaflet-tooltip-left.netCDFCSSClass::before {
+  border-left-color: green;
+}
+.leaflet-tooltip-right.netCDFCSSClass::before {
+  border-right-color: green;
+}
