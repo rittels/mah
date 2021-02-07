@@ -27,7 +27,7 @@ path_colors = {
     }
 }
 
-function drawpath(geojson, l) {
+function drawpath(geojson) {
     var path_source = geojson.properties.path_source;
     var lineCoordinate = [];
 
@@ -70,7 +70,7 @@ function mouseover(l) {
                 (function(site) {
                     return function(geojson) {
                         site.target.feature.properties.ascents[site.index].data = geojson;
-                        drawpath(geojson, site);
+                        drawpath(geojson);
                     };
                 }(l))
             );
