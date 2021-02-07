@@ -18,7 +18,7 @@ let marker_chroma = {
     // "netCDF": chroma.scale(['DarkGreen', 'GreenYellow'])
 };
 
-path_colors = {
+var path_colors = {
     "simulated": {
         color: 'DarkOrange'
     },
@@ -118,6 +118,8 @@ function mouseover(l) {
 
 var skewt = new SkewT('#sidebarContents');
 
+console.log(skewt);
+
 function clicked(l) {
 
     $('#sidebarTitle').html(l.target.feature.properties.name);
@@ -175,6 +177,7 @@ function beforeMapLoads() {
                 if (!newest_bufr && !newest_netcdf)
                     return;
 
+                var a;    
                 if (newest_bufr && newest_netcdf &&
                     (newest_bufr.syn_timestamp) ==
                     (newest_netcdf.syn_timestamp)) {
