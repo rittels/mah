@@ -39,19 +39,20 @@ function drawpath(geojson) {
     L.polyline(lineCoordinate, path_colors[path_source]).addTo(bootleaf.map);
 }
 
-// function loadAscent(l, url, index, completion) {
-//     if (!a.hasOwnProperty('data')) {
-//         var p = datapath + a.path;
-//         l.index = i;
-//         $.getJSON(p,
-//             (function(site) {
-//                 return function(geojson) {
-//                     site.target.feature.properties.ascents[site.index].data = geojson;
-//                     drawpath(geojson, site);
-//                 };
-//             }(l))
-//         );
-// }
+function loadAscent(l, url, index, completion) {
+    if (!a.hasOwnProperty('data')) {
+        var p = datapath + a.path;
+        l.index = i;
+        $.getJSON(p,
+            (function(site) {
+                return function(geojson) {
+                    site.target.feature.properties.ascents[site.index].data = geojson;
+                    completion(geojson);
+                };
+            }(l))
+        );
+    }
+}
 
 let drawAscents = 1;
 
