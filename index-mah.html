@@ -50,6 +50,12 @@
     <!-- Customise the styles used in this map -->
     <link rel="stylesheet" href="style.css">
 
+
+    <script src="mah/skewt.min.js"  charset="UTF-8"></script>
+    <link rel="stylesheet" type="text/css" href="mah/skewt.css">
+
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
+
     <!-- favicons -->
     <link rel="apple-touch-icon" sizes="76x76" href="./src/img/favicon-76.png">
     <link rel="apple-touch-icon" sizes="120x120" href="./src/img/favicon-120.png">
@@ -159,26 +165,6 @@
         </div>
     </div>
 </div>
-
-<div class="modal fade" id="loginModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Login to ArcGIS</h5>
-            </div>
-            <div class="modal-body">
-                <form class="form-signin">
-                  <label for="username" class="sr-only">Email address</label>
-                  <input type="text" id="username" class="form-control" placeholder="ArcGIS username" required="" autofocus="">
-                  <label for="password" class="sr-only">Password</label>
-                  <input type="password" id="password" class="form-control" placeholder="Password" required="">
-
-                  <button id="btnArcGISOnline" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-                </form>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 
 
 <div class="modal fade" id="aboutModal" tabindex="-1" role="dialog">
@@ -306,19 +292,19 @@
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
   crossorigin=""></script>
-<script src="https://unpkg.com/esri-leaflet@2.5.0/dist/esri-leaflet.js"
+<!-- <script src="https://unpkg.com/esri-leaflet@2.5.0/dist/esri-leaflet.js"
     integrity="sha512-ucw7Grpc+iEQZa711gcjgMBnmd9qju1CICsRaryvX7HJklK0pGl/prxKvtHwpgm5ZHdvAil7YPxI1oWPOWK3UQ=="
-    crossorigin=""></script>
+    crossorigin=""></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.2/leaflet.draw.js"></script>
-<script src="https://unpkg.com/esri-leaflet-renderers@2.1.2/dist/esri-leaflet-renderers.js"
+<!-- <script src="https://unpkg.com/esri-leaflet-renderers@2.1.2/dist/esri-leaflet-renderers.js"
     integrity="sha512-/McnqdlwYvfeOEWqoniEagFRQnLi/TNbkHe4EJypmZI02LBT7vBU/+PZ5W3FSsFFlRbnMCsJvnbp5MX8XOBrnQ=="
-    crossorigin=""></script>
+    crossorigin=""></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
 
 <!-- Plugins. Comment out any unused libaries to improve the page load times -->
 <!-- <script src="./src/plugins/bing/leaflet-bing-layer.min.js"></script> -->
 <script src="./src/plugins/geocoders/Control.Geocoder.js"></script>
-<script src="./src/plugins/geocoders/Control.Geocoder.harmony.js"></script>
+<!-- <script src="./src/plugins/geocoders/Control.Geocoder.harmony.js"></script> -->
 <!-- <script src="./src/plugins/leaflet-history/leaflet-history.js"></script> -->
 <!-- <script src="./src/plugins/leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.js"></script> -->
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/leaflet.markercluster.js"></script> -->

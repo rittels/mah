@@ -47,6 +47,12 @@ var config = {
 	  ],
 
     "tocCategories": [
+        // {
+        //     "name": "Available layers",
+        //     "layers": ["paths"
+        //     // , "paths", "countries"
+        //     ]
+        // },
     ],
     "projections": [{
         4269: '+proj=longlat +ellps=GRS80 +datum=NAD83 +no_defs '
@@ -61,5 +67,32 @@ var config = {
         "stroke": true
     },
     "layers": [
+        // {
+        // "id": "paths",
+        // "name": "Paths",
+        // "type": "geoJSON",
+        // "cluster": true,
+        // "showCoverageOnHover": false,
+        // "minZoom": 12,
+        // "url": "./data/theatres.geojson",
+        // "icon": {
+        //     "iconUrl": "./img/theater.png",
+        //     "iconSize": [24,28]
+        // },
+        // "style": {
+        // "stroke": true,
+        // "fillColor": "#00FFFF",
+        // "fillOpacity": 0.5,
+        // "radius": 10,
+        // "weight": 0.5,
+        // "opacity": 1,
+        // "color": '#727272',
+        // },
+        //   "visible": false,
+        //   // "label": {
+        //   // 	"name": "NAME",
+        //   // 	"minZoom": 14
+        //   // }
+        // }
     ]
 }
