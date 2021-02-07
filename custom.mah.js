@@ -39,16 +39,16 @@ function drawpath(geojson) {
     L.polyline(lineCoordinate, path_colors[path_source]).addTo(bootleaf.map);
 }
 
-function uv2speed(u,v) {
-    return Math.sqrt( u * u + v * v);
+function uv2speed(u, v) {
+    return Math.sqrt(u * u + v * v);
 }
 
 function deg(x) {
-    return (180/Math.PI)*x
+    return (180 / Math.PI) * x
 }
 
-function uv2dir(u,v) {
-    var d = deg(Math.PI/2 - Math.atan2(-v, -u));
+function uv2dir(u, v) {
+    var d = deg(Math.PI / 2 - Math.atan2(-v, -u));
     while (d < 0)
         d = (d + 360) % 360;
     return d;
@@ -59,10 +59,11 @@ function round3(value) {
 }
 
 let zeroK = 273.15;
+
 function plotSkewT(geojson) {
-    var data  = [];
+    var data = [];
     var pscale = 1.;
-    if  (geojson.properties.source == 'BUFR')
+    if (geojson.properties.source == 'BUFR')
         pscale = 0.01;
 
     for (var i in geojson.features) {
@@ -75,8 +76,8 @@ function plotSkewT(geojson) {
             "hght": round3(p['gpheight']),
             "temp": round3(p['temp'] - zeroK),
             "dwpt": round3(p['dewpoint'] - zeroK),
-            "wdir": round3(uv2dir(p['wind_u'],p['wind_v'])),
-            "wspd": round3(uv2speed(p['wind_u'],p['wind_v']))
+            "wdir": round3(uv2dir(p['wind_u'], p['wind_v'])),
+            "wspd": round3(uv2speed(p['wind_u'], p['wind_v']))
         });
     }
     skewt.plot(data);
@@ -109,9 +110,9 @@ function mouseover(l) {
             l.index = i;
             loadAscent(l, p, i, drawpath);
         }
-        else {
-            console.log("data for ", i, "already loaded:", a.data);
-        }
+        // else {
+        //     console.log("data for ", i, "already loaded:", a.data);
+        // }
     }
 }
 
@@ -125,7 +126,8 @@ function clicked(l) {
     if (!latest.hasOwnProperty('data')) {
         console.log("data for ", latest, "not yet loaded");
 
-    } else {
+    }
+    else {
         plotSkewT(latest.data);
     }
 
@@ -139,8 +141,18 @@ function findnetCDF(value, index, array) {
     return (value.source === "netCDF");
 }
 
+function _isTouchDevice() {
+    return (('ontouchstart' in window) ||
+        (navigator.maxTouchPoints > 0) ||
+        (navigator.msMaxTouchPoints > 0));
+}
+
+var isTouchDevice = _isTouchDevice();
+
 function beforeMapLoads() {
     console.log("Before map loads function");
+
+
     // Continue to load the map
     loadMap();
 
@@ -189,6 +201,8 @@ function beforeMapLoads() {
                 //marker.ascents = a;
                 var content = "<b>" + feature.properties.name + "</b>" + "<br>  " + rounded_age + " hours old";
 
+                console.log("isTouchDevice", isTouchDevice);
+                
                 // console.log(primary.source + 'CSSClass');
                 marker.bindTooltip(content, {
                         className: primary.source + 'CSSClass'
